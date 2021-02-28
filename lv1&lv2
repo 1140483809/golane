@@ -1,0 +1,82 @@
+package main
+
+import (
+	"fmt"
+	"reflect"
+)
+
+type person struct {
+	name string   //名字
+	age int       //年龄
+	gender string //性别
+}
+
+type dove interface {
+	gugugu()              //鸽子
+}
+
+type repeater interface {
+	repeat(string)       //复读机
+}
+
+type lemon interface {
+	lemoned()            //柠檬精
+}
+
+type xiang interface {
+	xian()              //真香怪
+}
+
+func (p *person) repeat(word string) {
+	fmt.Println(word)  //复读内容
+}
+
+func (p *person) gugugu() {
+	fmt.Println(p.name, "又鸽了")
+}
+
+func (p *person) xian() {
+	fmt.Println(p.name, "说：'欸，真香'")
+}
+
+func (p *person) lemoned() {
+	fmt.Println(p.name, "又酸了")
+}
+
+func Receiver(v interface{}) {//接收者函数
+	t := reflect.TypeOf(v)//获取v的数据类型
+	switch t {
+	case reflect.TypeOf(1):         //判断并输出输入的类型
+		fmt.Println("这是个int")
+	case reflect.TypeOf("string"):
+		fmt.Println("这是个string")
+	case reflect.TypeOf(true):
+		fmt.Println("这是个bool")
+	case reflect.TypeOf(0.0):
+		fmt.Println("这是个float")
+	default:
+		fmt.Println("unknown")
+	}
+}
+
+func main(){
+
+	p:=&person{            //输入人的基本信息
+		name: "xxx",       //姓名
+		age: 6,            //年龄
+		gender: "male",    //性别
+	}
+
+	p.gugugu()             //鸽
+	p.lemoned()            //酸
+	p.xian()               //香
+
+	var r repeater
+	r=p
+	r.repeat("helloword")  //复读
+
+	Receiver("傻逼")     //判断类型
+	Receiver(1)
+	Receiver(false)
+	Receiver(12.5)
+}
